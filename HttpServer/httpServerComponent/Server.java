@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.Map;
@@ -23,6 +24,9 @@ import productModule.IProduct;
 
 import factoryMethod.StateFactory;
 import orderModule.*;
+import java.util.List;
+import observers.*;
+import subject.ModelDataSubject;
 
 
 
@@ -134,12 +138,20 @@ public class Server {
 			
 			// Get response from the Order State and send it to the client
 			String stateResponse = aState.response();
+			// Create instances of 2 observers
+			IServerUIObserver bcObserver = new BarChartObserver();
+			IServerUIObserver taObserver = new TextAreaObserver();
 			
+			// Create a list of observers
+			List<IServerUIObserver> observersList = new ArrayList<IServerUIObserver>();
+			// Add the observers to the observersList
+			observersList.add(bcObserver);
+			observersList.add(taObserver);
 			// Pass Order State to the Model Data Subject 
-			
+			ModelDataSubject mds = new ModelDataSubject(observersList,aState);
 			
 			// Model Data Subject will notify the observers and update the server UI according to the State
-			
+			mds.notifyObservers(aState);
 			
 			String response = stateResponse;
 			System.out.println(response);

@@ -9,8 +9,9 @@ public class ModelDataSubject {
 	private IOrderState stateOfOrder;
 	
 	// Constructor
-	public ModelDataSubject(List<IServerUIObserver> observers) {
+	public ModelDataSubject(List<IServerUIObserver> observers, IOrderState stateOfOrder) {
 		this.observersList = observers;
+		this.stateOfOrder = stateOfOrder;
 	}
 
 	public List<IServerUIObserver> getObserversList() {
@@ -32,8 +33,13 @@ public class ModelDataSubject {
 	}
 
 	// The OBSERVER PATTERN
-	public void notifyObservers() {
-		
+	// If OrderState is OrderFulfilled, update both BarChart and Text Area
+	// Else update only the Text Area 
+	public void notifyObservers(IOrderState orderState) {
+		for(IServerUIObserver oneObserver : observersList) {
+			oneObserver.draw(orderState);	
+			
+		}
 	}
 	
 	
