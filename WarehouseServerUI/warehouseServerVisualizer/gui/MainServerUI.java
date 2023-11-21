@@ -91,14 +91,14 @@ public class MainServerUI extends JFrame {
 
 	}
 
-	private void createCharts(JPanel west, JPanel east) {
+	public void createCharts(JPanel west, JPanel east) {
 
 		createBar(west);
 		createReport(east);
 
 	}
 
-	private void createReport(JPanel west) {
+	public void createReport(JPanel west) {
 		JTextArea report = new JTextArea();
 		report.setEditable(false);
 		report.setPreferredSize(new Dimension(400, 300));
@@ -128,7 +128,7 @@ public class MainServerUI extends JFrame {
 		west.add(outputScrollPane);
 	}
 
-	private void createBar(JPanel west) {
+	public void createBar(JPanel west) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
 		for (Map.Entry<String, Integer> entry : productData.entrySet()) {

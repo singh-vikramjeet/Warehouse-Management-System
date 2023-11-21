@@ -112,10 +112,6 @@ public class LoginUI implements ActionListener{
         mainFrame.setVisible(true);
     }
 
-//    public static void main(String[] args) {
-//        //new LoginUI();
-//        
-//    }
 
     public void actionPerformed(ActionEvent e) {
         //Interface method

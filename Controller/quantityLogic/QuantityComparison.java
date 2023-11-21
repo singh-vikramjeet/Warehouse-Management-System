@@ -59,31 +59,8 @@ public class QuantityComparison {
 	public void setCurrentStockQuantity(int currentStockQuantity) {
 		this.currentStockQuantity = currentStockQuantity;
 	}
-	// Create a method to compare MaxStock Quantity with Ordered quantity
-	public void compareMaxStockQuantity() {
-		if(orderedQuantity > maxStockQuantity) {
-			// Reject Order State (1)
-			this.orderState = 1;
-			System.out.println("Order Rejected State");
-		}
-		else {
-			this.orderState = 0;
-		}
-	}
-	// Create a method to compare Available Stock quantity with Order quantity
-	public void compareCurrentStockQuantity() {
-		if(orderedQuantity > currentStockQuantity) {
-			// Order Pending State
-			this.orderState = 2;
-			System.out.println("Order Pending State");
-		}
-		else if (orderedQuantity < currentStockQuantity) {
-			// Order Fulfilled State
-			this.orderState = 3;
-			System.out.println("Order Fulfilled State");
-		}
-	}
 	
+	// Method to determine the order state
 	public void determineOrderState() {
 		if(orderedQuantity < maxStockQuantity && orderedQuantity < currentStockQuantity) {
 			// Order Fulfilled State

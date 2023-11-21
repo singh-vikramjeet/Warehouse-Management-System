@@ -30,7 +30,6 @@ public class IProduct {
 		this.currentStockQuantity = currentStockQuantity;
 	}
 	
-	// Method for hardcoding the important parameters
 	
 
 	public int getProductID() {

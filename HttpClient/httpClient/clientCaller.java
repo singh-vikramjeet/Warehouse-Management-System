@@ -92,13 +92,5 @@ public class clientCaller {
 		return null;
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		//clientCaller aCaller = new clientCaller();
-//		System.out.println("The server responed : " + aCaller.doThehttpCalltest1("Param1value", "Param2value"));
-//		System.out.println("The server responed : " + aCaller.sendHttpRequest("Param1value","Param2value","Param3value"));
-		
-	}
 
 }

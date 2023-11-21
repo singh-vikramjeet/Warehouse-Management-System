@@ -1,6 +1,11 @@
 package observers;
 
+import java.awt.GridLayout;
+
+import javax.swing.JPanel;
+
 import orderModule.IOrderState;
+import warehouseServerVisualizer.gui.MainServerUI;
 
 //The OBSERVER PATTERN
 // If OrderState is OrderFulfilled, update both BarChart and Text Area
@@ -9,8 +14,7 @@ import orderModule.IOrderState;
 public class TextAreaObserver implements IServerUIObserver {
 	public void draw(IOrderState oneState) {
 		// Call createReport method here from MainServerUI
-			System.out.println("Inside Text Area Observer :: Text Area is updated");
-		
+			System.out.println("Inside Text Area Observer :: Text Area is updated");		
 	}
 
 }

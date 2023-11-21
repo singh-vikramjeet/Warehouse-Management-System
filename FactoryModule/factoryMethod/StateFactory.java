@@ -5,7 +5,7 @@ import java.util.Map;
 
 import orderModule.*;
 
-
+// State Factory class to create different order states
 public class StateFactory {
 	
 	private static StateFactory instance = null;

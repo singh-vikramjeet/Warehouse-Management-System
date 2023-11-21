@@ -201,11 +201,7 @@ public class MainClientUI extends JFrame implements ActionListener {
 			clientCaller cc = new clientCaller();
 			// localhost/sendorder handler
 			String result = cc.sendHttpRequest(theProduct,theQuantity,java.time.LocalDateTime.now().toString());
-			//System.out.println("\nThe server responed:" + result);
 			
-			// New Handler
-			//String result = cc.orderProduct(theProduct,theQuantity,java.time.LocalDateTime.now().toString());
-//			System.out.println("New Server Response: " + result);
 
 		}
 	}

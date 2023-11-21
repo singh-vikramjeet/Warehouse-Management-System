@@ -55,12 +55,10 @@ public class LastOrder {
 
 		// Here we query the Product DB and we get the product names or the product IDs
 		
-//		productName = "Product1";
-//		quantity = 22;
-//		date = java.time.LocalDateTime.now();
-		productName = this.getProductName();
-		quantity = this.getQuantity();
-		date = this.getDate();
+		productName = "Product1";
+		quantity = 22;
+		date = java.time.LocalDateTime.now();
+		
 		
 
 		return this;
