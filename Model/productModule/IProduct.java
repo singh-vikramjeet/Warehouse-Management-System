@@ -32,6 +32,9 @@ public class IProduct {
 	
 	
 
+	public IProduct() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getProductID() {
 		return productID;
 	}
