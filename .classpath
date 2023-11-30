@@ -10,6 +10,8 @@
 	<classpathentry kind="src" path="Viewer"/>
 	<classpathentry kind="src" path="Controller"/>
 	<classpathentry kind="src" path="FactoryModule"/>
+	<classpathentry kind="src" path="Databases"/>
+	<classpathentry kind="src" path="AdminComponent"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
 		<attributes>
 			<attribute name="module" value="true"/>
