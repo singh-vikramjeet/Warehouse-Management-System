@@ -12,6 +12,8 @@ import java.util.Scanner;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import sqLiteDB.ProductDB;
+import productModule.IProduct;
 
 public class AvailableProductList {
 	private static AvailableProductList instance = null;
@@ -38,16 +40,25 @@ public class AvailableProductList {
 	public HashMap<String, Integer> findAvailableProductsAndQuantities() {
 		
 		// Here we query the Product DB and we get the product names or the product IDs
+	
+		List<IProduct> lp = ProductDB.getProductList();
+		int[] quantity = new int[5];
+		for(int i = 0; i < 5;i++) {
+			quantity[i] = lp.get(i).getCurrentStockQuantity();
+		}
+		
+		//int r1 = lp.get(0).getCurrentStockQuantity();
+		//int r2 = lp.get(1).getCurrentStockQuantity();
 
 		availableProductList.clear();
 		
 		// Here we query the Product DB and we get the product names or the product IDs
 		
-		availableProductList.put("Product 1", 200);
-		availableProductList.put("Product 2", 350);
-		availableProductList.put("Product 3", 400);
-		availableProductList.put("Product 4", 150);
-		availableProductList.put("Product 5", 100);
+		availableProductList.put("Product 1", quantity[0]);
+		availableProductList.put("Product 2", quantity[1]);
+		availableProductList.put("Product 3", quantity[2]);
+		availableProductList.put("Product 4", quantity[3]);
+		availableProductList.put("Product 5", quantity[4]);
 		
 		return availableProductList;
 

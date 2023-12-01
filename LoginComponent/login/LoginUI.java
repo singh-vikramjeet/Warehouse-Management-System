@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import httpServerComponent.Server;
 import warehouseClientVisualizer.gui.MainClientUI;
+import sqLiteDB.*;
 
 public class LoginUI implements ActionListener{
 
@@ -85,9 +86,15 @@ public class LoginUI implements ActionListener{
             			System.out.println("Server started!");
             			System.out.println("Server is listening to port 8000");
             			
+            			ProductDB.connect();
+            			
             			// Display Server UI
             			MainServerUI msui = new MainServerUI();
             			msui.displayUI();
+            			
+            			// Connect to Databases
+            			// Connect to ProductDB
+            			//ProductDB.connect();
             			
             		} catch (Exception s) {
             			// TODO Auto-generated catch block

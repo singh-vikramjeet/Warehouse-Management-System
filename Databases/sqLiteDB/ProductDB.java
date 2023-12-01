@@ -12,7 +12,7 @@ import productModule.IProduct;
 
 public class ProductDB {
 	// List of products
-	private static List<IProduct> productList;
+	private static List<IProduct> productList = new ArrayList<IProduct>();
 	
 	
 	public static List<IProduct> getProductList() {
@@ -33,7 +33,7 @@ public class ProductDB {
 
 			System.out.println("Connection to SQLite has been established");
 			// List of Products
-			productList = new ArrayList<IProduct>();
+			//productList = new ArrayList<IProduct>();
 
 			ResultSet rs = statement.executeQuery("select * from products");
 			 while(rs.next())
@@ -51,7 +51,12 @@ public class ProductDB {
 		        IProduct aProduct = new IProduct();
 		        aProduct.setProductID(rs.getInt("Id"));
 		        aProduct.setProductName(rs.getString("Name"));
-		        
+		        aProduct.setCurrentStockQuantity(rs.getInt("Current Stock Quantity"));
+		        aProduct.setUnitPrice(rs.getInt("Unit Price"));
+		        aProduct.setMaxStockQuantity(rs.getInt("Max Stock Quantity"));
+		        aProduct.setRestockSchedule(rs.getInt("Restock Schedule"));
+		        aProduct.setDiscountStrategyID(rs.getString("Discount Strategy"));
+		        productList.add(aProduct);
 		        
 		      }
 
@@ -61,6 +66,7 @@ public class ProductDB {
 			try {
 				if (conn != null) {
 					conn.close();
+					System.out.println("Connection to Product DB closed");
 				}
 			} catch (SQLException ex) {
 				System.out.println(ex.getMessage());
@@ -69,8 +75,17 @@ public class ProductDB {
 
 	}
 	
+	
+	
+	// Create a method to extract only 
+	
 	public static void main(String[] args) {
 		connect();
+//		List<IProduct> lp = ProductDB.getProductList();
+//		System.out.println(lp.get(0).getCurrentStockQuantity());
+//		System.out.println(lp.get(1).getCurrentStockQuantity());
+		
+		
 	}
 
 }
