@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class AdminDB {
+	// List of users
+	
 
 	public static void connect() {
 		Connection conn = null;

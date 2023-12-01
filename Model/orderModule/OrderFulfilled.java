@@ -16,5 +16,6 @@ public class OrderFulfilled implements IOrderState{
 		return fulfilledResponse;
 	}
 	// Notify the Bar Chart Observer and the Text Area Observer
+	// Update the Order Quantity
 
 }

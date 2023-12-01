@@ -24,6 +24,9 @@ public class OrderHandlerFacade {
 		// Step 10: Send the response back to Client
 		
 		// Step 11: Display the response on both ServerUI and ClientUI
+		
+		
+		// You also need to add methods for Pricing Strategy and Restock Operation
 	}
 
 }

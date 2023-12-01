@@ -2,6 +2,7 @@ package sqLiteDB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,20 +43,20 @@ public class ProductDB {
 				// Printing the result set
 		        System.out.println("Product Id = " + rs.getInt("Id"));
 		        System.out.println("Product Name = " + rs.getString("Name"));
-		        System.out.println("Current Stock Quantity = " + rs.getInt("Current Stock Quantity"));
-		        System.out.println("Unit Price= " + rs.getInt("Unit Price"));
-		        System.out.println("Max Stock Quantity = " + rs.getInt("Max Stock Quantity"));
-		        System.out.println("Restock Schedule= " + rs.getInt("Restock Schedule"));
-		        System.out.println("Discount Strategy= " + rs.getString("Discount Strategy"));
+		        System.out.println("Current Stock Quantity = " + rs.getInt("CurrentStockQuantity"));
+		        System.out.println("Unit Price= " + rs.getInt("UnitPrice"));
+		        System.out.println("Max Stock Quantity = " + rs.getInt("MaxStockQuantity"));
+		        System.out.println("Restock Schedule= " + rs.getInt("RestockSchedule"));
+		        System.out.println("Discount Strategy= " + rs.getString("DiscountStrategy"));
 		        
 		        IProduct aProduct = new IProduct();
 		        aProduct.setProductID(rs.getInt("Id"));
 		        aProduct.setProductName(rs.getString("Name"));
-		        aProduct.setCurrentStockQuantity(rs.getInt("Current Stock Quantity"));
-		        aProduct.setUnitPrice(rs.getInt("Unit Price"));
-		        aProduct.setMaxStockQuantity(rs.getInt("Max Stock Quantity"));
-		        aProduct.setRestockSchedule(rs.getInt("Restock Schedule"));
-		        aProduct.setDiscountStrategyID(rs.getString("Discount Strategy"));
+		        aProduct.setCurrentStockQuantity(rs.getInt("CurrentStockQuantity"));
+		        aProduct.setUnitPrice(rs.getInt("UnitPrice"));
+		        aProduct.setMaxStockQuantity(rs.getInt("MaxStockQuantity"));
+		        aProduct.setRestockSchedule(rs.getInt("RestockSchedule"));
+		        aProduct.setDiscountStrategyID(rs.getString("DiscountStrategy"));
 		        productList.add(aProduct);
 		        
 		      }
@@ -77,13 +78,46 @@ public class ProductDB {
 	
 	
 	
-	// Create a method to extract only 
+	// Method to update Current Stock Quantity
+	// UPDATE products
+	// SET  CurrentStockQuantity = 500
+	// WHERE Name="Product5";
+	
+	public static void updateCurrentStockQuantity(String productName, int productQuantity) {
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection("jdbc:sqlite:/Users/vikramjeetsingh/DBBrowser/ProductDB.db");
+			System.out.println("Connection to SQLite has been established");
+			
+			// SQL to update the Current Stock Quantity
+			String updateStockSql = "UPDATE products SET CurrentStockQuantity=? WHERE Name=?";
+			PreparedStatement pstmt = conn.prepareStatement(updateStockSql);
+			pstmt.setString(2,productName);
+			pstmt.setInt(1, productQuantity);
+			pstmt.executeUpdate();
+			
+			
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				if (conn != null) {
+					conn.close();
+					System.out.println("Connection to Product DB closed");
+				}
+			} catch (SQLException ex) {
+				System.out.println(ex.getMessage());
+			}
+		}
+	}
 	
 	public static void main(String[] args) {
+		//updateCurrentStockQuantity("Product2",650);
 		connect();
 //		List<IProduct> lp = ProductDB.getProductList();
 //		System.out.println(lp.get(0).getCurrentStockQuantity());
 //		System.out.println(lp.get(1).getCurrentStockQuantity());
+		
 		
 		
 	}
