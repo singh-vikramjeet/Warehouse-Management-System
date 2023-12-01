@@ -14,7 +14,7 @@ public class OrderRejected implements IOrderState{
 	}
 	
 
-	public String response() {
+	public String response(Order anOrder, int price, int currentStockQuantity) {
 		String rejectResponse = "Order exceeds the max quantity set for this product and cannot be processed";
 		return rejectResponse;
 	}

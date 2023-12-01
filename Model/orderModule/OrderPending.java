@@ -11,7 +11,7 @@ public class OrderPending implements IOrderState{
 		return anOrder;
 	}
 
-	public String response() {
+	public String response(Order anOrder, int price, int currentStockQuantity) {
 		String pendingResponse = "Order for Product X Quantity Y is pending – order exceeds available quantity";
 		return pendingResponse;
 	}

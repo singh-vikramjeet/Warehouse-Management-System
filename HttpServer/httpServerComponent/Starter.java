@@ -8,10 +8,6 @@ public class Starter {
 		// Create an instance of LoginUI
 		LoginUI.getInstance();
 		
-
-		
-		
-		
 		
 	}
 
