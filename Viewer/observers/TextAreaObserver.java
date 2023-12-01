@@ -13,6 +13,10 @@ import warehouseServerVisualizer.gui.MainServerUI;
 
 public class TextAreaObserver implements IServerUIObserver {
 	public void draw(IOrderState oneState) {
+		JPanel east = new JPanel();
+		east.setLayout(new GridLayout(2, 0));
+		MainServerUI.getInstance().createReport(east);
+		
 		// Call createReport method here from MainServerUI
 			System.out.println("Inside Text Area Observer :: Text Area is updated");		
 	}
