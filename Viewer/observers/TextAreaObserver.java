@@ -13,8 +13,8 @@ import warehouseServerVisualizer.gui.MainServerUI;
 
 public class TextAreaObserver implements IServerUIObserver {
 	public void draw(IOrderState oneState) {
-		JPanel east = new JPanel();
-		east.setLayout(new GridLayout(2, 0));
+		JPanel east = MainServerUI.getEast();
+		
 		MainServerUI.getInstance().createReport(east);
 		
 		// Call createReport method here from MainServerUI

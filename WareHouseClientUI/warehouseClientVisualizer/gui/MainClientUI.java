@@ -175,6 +175,14 @@ public class MainClientUI extends JFrame implements ActionListener {
 		frame.setVisible(true);
 
 	}
+	private static void addDelay(int seconds) {
+        try {
+            // Sleep for the specified number of seconds
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
@@ -200,7 +208,8 @@ public class MainClientUI extends JFrame implements ActionListener {
 			// Send HttpRequest to Server with all the order details
 			clientCaller cc = new clientCaller();
 			// localhost/sendorder handler
-			String result = cc.sendHttpRequest(theProduct,theQuantity,java.time.LocalDateTime.now().toString());
+			cc.sendHttpRequest(theProduct,theQuantity,java.time.LocalDateTime.now().toString());
+			//addDelay(5);
 			
 
 		}

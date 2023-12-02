@@ -32,7 +32,7 @@ public class ProductDB {
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
-			System.out.println("Connection to SQLite has been established");
+			System.out.println("\nConnection to SQLite has been established");
 			// List of Products
 			//productList = new ArrayList<IProduct>();
 
@@ -41,13 +41,13 @@ public class ProductDB {
 		      {
 		        // read the result set
 				// Printing the result set
-		        System.out.println("Product Id = " + rs.getInt("Id"));
-		        System.out.println("Product Name = " + rs.getString("Name"));
-		        System.out.println("Current Stock Quantity = " + rs.getInt("CurrentStockQuantity"));
-		        System.out.println("Unit Price= " + rs.getInt("UnitPrice"));
-		        System.out.println("Max Stock Quantity = " + rs.getInt("MaxStockQuantity"));
-		        System.out.println("Restock Schedule= " + rs.getInt("RestockSchedule"));
-		        System.out.println("Discount Strategy= " + rs.getString("DiscountStrategy"));
+//		        System.out.println("Product Id = " + rs.getInt("Id"));
+//		        System.out.println("Product Name = " + rs.getString("Name"));
+//		        System.out.println("Current Stock Quantity = " + rs.getInt("CurrentStockQuantity"));
+//		        System.out.println("Unit Price= " + rs.getInt("UnitPrice"));
+//		        System.out.println("Max Stock Quantity = " + rs.getInt("MaxStockQuantity"));
+//		        System.out.println("Restock Schedule= " + rs.getInt("RestockSchedule"));
+//		        System.out.println("Discount Strategy= " + rs.getString("DiscountStrategy"));
 		        
 		        IProduct aProduct = new IProduct();
 		        aProduct.setProductID(rs.getInt("Id"));

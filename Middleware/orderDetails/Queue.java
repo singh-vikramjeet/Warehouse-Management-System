@@ -5,7 +5,7 @@ import java.util.ArrayDeque;
 
 public class Queue {
     // FIFO Queue
-	static Deque<Order> orderQueue = new ArrayDeque<Order>();
+	private static Deque<Order> orderQueue = new ArrayDeque<Order>();
 	
 	// Method to add an order to the queue
 	public static void addOrder(Order anOrder) {

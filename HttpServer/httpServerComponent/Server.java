@@ -7,7 +7,9 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 
 import java.util.Map;
@@ -28,6 +30,7 @@ import java.util.List;
 import observers.*;
 import subject.ModelDataSubject;
 import sqLiteDB.ProductDB;
+import orderDetails.Queue;
 
 
 
@@ -72,6 +75,15 @@ public class Server {
 		}
 	}
 	
+	private static void addDelay(int seconds) {
+        try {
+            // Sleep for the specified number of seconds
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+	
 	static class OrderDetailsHandler implements HttpHandler {
 		public void handle(HttpExchange exchange) throws IOException {
 			Map<String, String> parms = queryToMap(exchange.getRequestURI().getQuery());
@@ -84,11 +96,16 @@ public class Server {
 //			//LocalDateTime.parse(parms.get("p3"))
 //			LastOrder.setDate(LocalDateTime.parse(parms.get("p3")));
 			
-			
+			// Queue to store list of orders
+			Deque<Order> orderQueue = new ArrayDeque<Order>();
+		
 			// Pass the order details to the Model
 			int quantityP2 = Integer.parseInt(parms.get("p2"));
 			// Order Details from the client
 			Order anOrder = new Order(parms.get("p1"),quantityP2,LocalDateTime.parse(parms.get("p3")));
+			
+			// Add order object to the queue
+			orderQueue.add(anOrder);
 			
 			// Get Product Details from the Database
 			List<IProduct> productList = ProductDB.getProductList();
@@ -135,10 +152,10 @@ public class Server {
 			
 			// Get order price from Controller
 			int price = 535;
-			int csq = aProduct.getCurrentStockQuantity();
+			//int csq = aProduct.getCurrentStockQuantity();
 			
 			// Get response from the Order State and send it to the client
-			String stateResponse = aState.response(anOrder,535,csq);
+			String stateResponse = aState.response(anOrder,535,aProduct);
 			// Create instances of 2 observers
 			IServerUIObserver bcObserver = new BarChartObserver();
 			IServerUIObserver taObserver = new TextAreaObserver();
@@ -154,7 +171,9 @@ public class Server {
 			mds.notifyObservers(aState);
 			
 			String response = stateResponse;
+			//addDelay(30);
 			System.out.println(response);
+			
 			exchange.sendResponseHeaders(200, response.length());
 			OutputStream os = exchange.getResponseBody();
 			os.write(response.getBytes());

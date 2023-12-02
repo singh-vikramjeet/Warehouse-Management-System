@@ -89,12 +89,9 @@ public class LoginUI implements ActionListener{
             			ProductDB.connect();
             			
             			// Display Server UI
-            			MainServerUI msui = new MainServerUI();
-            			msui.displayUI();
+            			//MainServerUI.getInstance();
+            			MainServerUI.displayUI();
             			
-            			// Connect to Databases
-            			// Connect to ProductDB
-            			//ProductDB.connect();
             			
             		} catch (Exception s) {
             			// TODO Auto-generated catch block

@@ -61,6 +61,8 @@ public class MainServerUI extends JFrame {
 	private static LastOrder theLastOrder;
 
 	private static MainServerUI instance;
+	
+	private static JPanel east;
 
 	public static MainServerUI getInstance() {
 		if (instance == null)
@@ -68,6 +70,20 @@ public class MainServerUI extends JFrame {
 
 		return instance;
 	}
+	
+	
+
+	public static JPanel getEast() {
+		return east;
+	}
+
+
+
+	public static void setEast(JPanel east) {
+		MainServerUI.east = east;
+	}
+
+
 
 	public MainServerUI() {
 		// Set window title
@@ -81,7 +97,7 @@ public class MainServerUI extends JFrame {
 		JPanel west = new JPanel();
 		west.setLayout(new GridLayout(2, 0));
 
-		JPanel east = new JPanel();
+		east = new JPanel();
 		east.setLayout(new GridLayout(2, 0));
 
 		getContentPane().add(west, BorderLayout.WEST);
@@ -104,14 +120,16 @@ public class MainServerUI extends JFrame {
 		report.setPreferredSize(new Dimension(400, 300));
 		report.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		report.setBackground(Color.white);
-		String reportMessage1, reportMessage2;
+		String reportMessage1, reportMessage2,reportMessage3;
 
 		reportMessage1 = "Last Order\n" + "==========================\n" + "\t";
 		reportMessage1 = reportMessage1 + "Product: " + theLastOrder.getProductName() + "\n" 
 		                 + "\tQuantity:" +  theLastOrder.getQuantity() + "\n"
 		                 + "\tTimeStamp:" +  theLastOrder.getDate() + "\n";
+		
 
 		reportMessage2 = "Current Product Quantity in Warehouse\n" + "==============================\n";
+		
 
 		for (Map.Entry<String, Integer> entry : productData.entrySet()) {
 			//System.out.println("IN LOOP " + entry.getKey() + " " + entry.getValue());
@@ -162,7 +180,7 @@ public class MainServerUI extends JFrame {
 		west.add(chartPanel);
 	}
 	
-	public void displayUI() {
+	public static void displayUI() {
 		JFrame frame = MainServerUI.getInstance();
 		frame.setSize(800, 600);
 		// frame.pack();
