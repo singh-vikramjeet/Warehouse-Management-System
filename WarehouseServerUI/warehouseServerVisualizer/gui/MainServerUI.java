@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -62,7 +63,9 @@ public class MainServerUI extends JFrame {
 
 	private static MainServerUI instance;
 	
-	private static JPanel east;
+	private JPanel east; // Text Area
+	private JLabel responseLabel; //
+	private JPanel west; // Bar Chart
 
 	public static MainServerUI getInstance() {
 		if (instance == null)
@@ -71,19 +74,6 @@ public class MainServerUI extends JFrame {
 		return instance;
 	}
 	
-	
-
-	public static JPanel getEast() {
-		return east;
-	}
-
-
-
-	public static void setEast(JPanel east) {
-		MainServerUI.east = east;
-	}
-
-
 
 	public MainServerUI() {
 		// Set window title
@@ -94,7 +84,7 @@ public class MainServerUI extends JFrame {
 
 
 		// Set charts region
-		JPanel west = new JPanel();
+		west = new JPanel();
 		west.setLayout(new GridLayout(2, 0));
 
 		east = new JPanel();
@@ -104,6 +94,19 @@ public class MainServerUI extends JFrame {
 		getContentPane().add(east, BorderLayout.EAST);
 
 		createCharts(west, east);
+		
+		
+		// Add a panel for the bottom label
+	    JPanel bottomPanel = new JPanel(new BorderLayout());
+	    responseLabel = new JLabel("Result: Order is finalized for Product 1 and Quantity 1 with total price 500", SwingConstants.CENTER);
+	    responseLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+	    responseLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+	    bottomPanel.add(responseLabel, BorderLayout.CENTER);
+
+	    // Add the bottom panel to the main UI at the SOUTH position
+	    getContentPane().add(bottomPanel, BorderLayout.SOUTH);
+		
+		
 
 	}
 
@@ -179,6 +182,11 @@ public class MainServerUI extends JFrame {
 		chartPanel.setBackground(Color.white);
 		west.add(chartPanel);
 	}
+	
+	// Method to update the text of the JLabel
+    public void updateResponseLabelText(String newText) {
+        responseLabel.setText(newText);
+    }
 	
 	public static void displayUI() {
 		JFrame frame = MainServerUI.getInstance();

@@ -13,9 +13,9 @@ import warehouseServerVisualizer.gui.MainServerUI;
 
 public class TextAreaObserver implements IServerUIObserver {
 	public void draw(IOrderState oneState) {
-		JPanel east = MainServerUI.getEast();
 		
-		MainServerUI.getInstance().createReport(east);
+		
+		//MainServerUI.getInstance().createReport(east);
 		
 		// Call createReport method here from MainServerUI
 			System.out.println("Inside Text Area Observer :: Text Area is updated");		
