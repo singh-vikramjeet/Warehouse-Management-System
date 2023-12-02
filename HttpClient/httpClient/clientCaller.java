@@ -50,7 +50,9 @@ public class clientCaller {
 			int responsecode = conn.getResponseCode();
 			if (responsecode == 200) {
 				String inline = "";
-				Scanner sc = new Scanner(url.openStream());
+				//Problem with sending 2 HTTP requests fixed here
+				// On line 55, changed url.openStream() to conn.getInputStream()
+				Scanner sc = new Scanner(conn.getInputStream());
 				while (sc.hasNext()) {
 					inline += sc.nextLine();
 				}
@@ -65,32 +67,5 @@ public class clientCaller {
 		return null;
 	}
 	
-	
-	public String orderProduct(String p1, String p2, String p3) {
-		String urlString = String.format(
-				"http://localhost:8000/test3?p1=%s&p2=%s&p3=%s", p1, p2, p3);
-		try {
-			URL url = new URL(urlString);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.connect();
-			int responsecode = conn.getResponseCode();
-			if (responsecode == 200) {
-				String inline = "";
-				Scanner sc = new Scanner(url.openStream());
-				while (sc.hasNext()) {
-					inline += sc.nextLine();
-				}
-				sc.close();
-			
-				return inline;
-			}
-
-		} catch (IOException e) {
-			System.out.println("Something went wrong with the API call.");
-		}
-		return null;
-	}
-
 
 }
