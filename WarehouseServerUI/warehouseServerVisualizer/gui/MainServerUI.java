@@ -66,6 +66,7 @@ public class MainServerUI extends JFrame {
 	private JPanel east; // Text Area
 	private JLabel responseLabel; //
 	private JPanel west; // Bar Chart
+	private ChartPanel chartPanel; // for Bar Chart
 
 	public static MainServerUI getInstance() {
 		if (instance == null)
@@ -74,6 +75,36 @@ public class MainServerUI extends JFrame {
 		return instance;
 	}
 	
+	
+	public JPanel getEast() {
+		return east;
+	}
+
+
+	public void setEast(JPanel east) {
+		this.east = east;
+	}
+
+
+	public JLabel getResponseLabel() {
+		return responseLabel;
+	}
+
+
+	public void setResponseLabel(JLabel responseLabel) {
+		this.responseLabel = responseLabel;
+	}
+
+
+
+	public JPanel getWest() {
+		return west;
+	}
+
+	public void setWest(JPanel west) {
+		this.west = west;
+	}
+
 
 	public MainServerUI() {
 		// Set window title
@@ -123,7 +154,7 @@ public class MainServerUI extends JFrame {
 		report.setPreferredSize(new Dimension(400, 300));
 		report.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		report.setBackground(Color.white);
-		String reportMessage1, reportMessage2,reportMessage3;
+		String reportMessage1, reportMessage2;
 
 		reportMessage1 = "Last Order\n" + "==========================\n" + "\t";
 		reportMessage1 = reportMessage1 + "Product: " + theLastOrder.getProductName() + "\n" 
@@ -140,9 +171,6 @@ public class MainServerUI extends JFrame {
 			reportMessage2 = reportMessage2 + "\n \t Quantity ==> " + entry.getValue() + "\n";
 
 		}
-
-
-	
 
 		report.setText(reportMessage1 + reportMessage2);
 		JScrollPane outputScrollPane = new JScrollPane(report);
@@ -176,16 +204,26 @@ public class MainServerUI extends JFrame {
 				new Font("Serif", java.awt.Font.BOLD, 18), plot, true);
 
 
+		
 		ChartPanel chartPanel = new ChartPanel(barChart);
 		chartPanel.setPreferredSize(new Dimension(400, 300));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		chartPanel.setBackground(Color.white);
+		
 		west.add(chartPanel);
+		west.validate();
+		west.repaint();
+		
 	}
 	
 	// Method to update the text of the JLabel
     public void updateResponseLabelText(String newText) {
         responseLabel.setText(newText);
+    }
+    
+    // Method to update Product data
+    public static void updateChartData() {
+    	productData = AvailableProductList.getInstance().findAvailableProductsAndQuantities();
     }
 	
 	public static void displayUI() {

@@ -13,15 +13,24 @@ import warehouseServerVisualizer.gui.MainServerUI;
 
 public class BarChartObserver implements IServerUIObserver {
 	public void draw(IOrderState oneState) {
-		MainServerUI ms = MainServerUI.getInstance();
-		// Set charts region
-		JPanel west = new JPanel();
-		west.setLayout(new GridLayout(2, 0));
+
 		
 		// Call createBar method here from MainServerUI
 		if(oneState.getClass().getSimpleName().equalsIgnoreCase("OrderFulfilled")) {
 			System.out.println("Inside Bar Chart Observer :: Bar chart is updated");
-			ms.createBar(west);
+			// Get west JPanel
+			JPanel jp = MainServerUI.getInstance().getWest();
+			// Update the chart data in the MainServerUI
+			MainServerUI.updateChartData();
+			// Remove the old Bar chart from JPanel
+			jp.removeAll();
+			// Create new Bar chart 
+			MainServerUI.getInstance().createBar(jp);
+			//jp.removeAll();
+			//jp.invalidate();
+//			jp.validate();
+//			jp.repaint();
+			
 			
 		}
 	}
