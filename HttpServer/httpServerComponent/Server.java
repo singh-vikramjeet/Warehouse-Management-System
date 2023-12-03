@@ -50,8 +50,8 @@ public class Server {
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();
 	}
-	
-	
+
+
 	static class MyHandler1 implements HttpHandler {
 		public void handle(HttpExchange exchange) throws IOException {
 			Map<String, String> parms = queryToMap(exchange.getRequestURI().getQuery());
@@ -74,86 +74,86 @@ public class Server {
 			os2.close();
 		}
 	}
-	
+
 	private static void addDelay(int seconds) {
-        try {
-            // Sleep for the specified number of seconds
-            Thread.sleep(seconds * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-	
+		try {
+			// Sleep for the specified number of seconds
+			Thread.sleep(seconds * 1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	static class OrderDetailsHandler implements HttpHandler {
 		public void handle(HttpExchange exchange) throws IOException {
 			Map<String, String> parms = queryToMap(exchange.getRequestURI().getQuery());
-			
-			
-			// Update the Server UI here by creating an instance of LastOrder
-//			LastOrder.getInstance();
-//			LastOrder.setProductName(parms.get("p1"));
-//			LastOrder.setQuantity(1000);
-//			//LocalDateTime.parse(parms.get("p3"))
-//			LastOrder.setDate(LocalDateTime.parse(parms.get("p3")));
-			
-			// Queue to store list of orders
-			Deque<Order> orderQueue = new ArrayDeque<Order>();
-		
+
+
 			// Pass the order details to the Model
 			int quantityP2 = Integer.parseInt(parms.get("p2"));
 			// Order Details from the client
 			Order anOrder = new Order(parms.get("p1"),quantityP2,LocalDateTime.parse(parms.get("p3")));
+
 			
+			// Queue to store list of orders
+			Queue qObject = new Queue();
 			// Add order object to the queue
-			orderQueue.add(anOrder);
+			qObject.addOrder(anOrder);
 			
+			// Set the details for LastOrder
+			LastOrder.getInstance();
+			LastOrder.setProductName(anOrder.getProductName());
+			LastOrder.setQuantity(anOrder.getProductQuantity());
+			LastOrder.setDate(LocalDateTime.parse(parms.get("p3")));
+			
+
 			// Get Product Details from the Database
 			List<IProduct> productList = ProductDB.getProductList();
-			
+
 			// Check which Product is being ordered
 			String ProductName = anOrder.getProductName();
-			
+
 			// Create a Product object
 			IProduct aProduct = new IProduct();
-			
+
 			// Iterate over the Product List to extract the right product
 			for (int i = 0; i < 5; i++) {
 				if(productList.get(i).getProductName().equalsIgnoreCase(ProductName)) {
 					aProduct = productList.get(i);
 				}
 			}
-			
+
 			// Pass the order and Product Object to the Controller (QuantityComparison class)
 			QuantityComparison qc = new QuantityComparison(anOrder, aProduct);
-			
+
 			//(ProductID, currentStockQuantity, maxStockQuantity)
 			//IProduct aProduct = new IProduct(1,200,400);
 			//QuantityComparison qc = new QuantityComparison(anOrder, aProduct);
 			//QuantityComparison qc = new QuantityComparison(anOrder);
 			//qc.setCurrentStockQuantity(200);
 			//qc.setMaxStockQuantity(400);
-			
-			
+
+
 			// Determine the Order State
 			qc.determineOrderState();
-	
+
 			// Get the Order State(1, 2 or 3)
 			// State 1: Order Rejected
 			// State 2: Order Accepted
 			// State 3: Order Fulfilled
-		
+
 			int OrderState = qc.getOrderState();
-			
+
 			// Create Factory Instance
 			StateFactory sf = StateFactory.getInstance();
 			// Pass the order state to the factory method to create the desired order state
-			
+
 			IOrderState aState = sf.create(OrderState);
-			
+
 			// Get order price from Controller
 			int price = 535;
 			//int csq = aProduct.getCurrentStockQuantity();
-			
+
 			// Get response from the Order State and send it to the client
 			String stateResponse = aState.response(anOrder,535,aProduct);
 			// Create instances of 2 observers
@@ -168,34 +168,34 @@ public class Server {
 			observersList.add(rlObserver);
 			// Pass Order State to the Model Data Subject 
 			ModelDataSubject mds = new ModelDataSubject(observersList,aState);
-			
+
 			// Model Data Subject will notify the observers and update the server UI according to the State
 			mds.notifyObservers(aState);
-			
+
 			String response = stateResponse;
 			//addDelay(30);
 			System.out.println(response);
-			
+
 			exchange.sendResponseHeaders(200, response.length());
 			OutputStream os = exchange.getResponseBody();
 			os.write(response.getBytes());
 			os.close();
-						
-			
+
+
 		}
-}
+	}
 
 	public static Map<String, String> queryToMap(String query){
 
-	    Map<String, String> result = new HashMap<String, String>();
-	    for (String param : query.split("&")) {
-	        String pair[] = param.split("=");
-	        if (pair.length>1) {
-	            result.put(pair[0], pair[1]);
-	        }else{
-	            result.put(pair[0], "");
-	        }
-	    }
-	    return result;
-	  }
+		Map<String, String> result = new HashMap<String, String>();
+		for (String param : query.split("&")) {
+			String pair[] = param.split("=");
+			if (pair.length>1) {
+				result.put(pair[0], pair[1]);
+			}else{
+				result.put(pair[0], "");
+			}
+		}
+		return result;
+	}
 }

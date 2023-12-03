@@ -50,6 +50,7 @@ import org.jfree.data.time.Year;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import orderDetails.Order;
 import warehouseServerVisualizer.utils.AvailableProductList;
 import warehouseServerVisualizer.utils.LastOrder;
 

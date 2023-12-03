@@ -2,10 +2,22 @@ package warehouseServerVisualizer.utils;
 
 import java.util.Date;
 import java.util.HashMap;
+
+import orderDetails.Order;
+import orderDetails.Queue;
+
 import java.time.LocalDateTime;  
 import java.time.format.DateTimeFormatter; 
 
 public class LastOrder {
+
+
+	private static LastOrder instance = null;
+
+	private static String productName;
+	private static int quantity;
+	private static LocalDateTime date;
+
 	public static String getProductName() {
 		return productName;
 	}
@@ -30,15 +42,11 @@ public class LastOrder {
 		LastOrder.date = date;
 	}
 
-	private static LastOrder instance = null;
 
-	private static String productName;
-	private static int quantity;
-	private static LocalDateTime date;
-	
-	
 
-	
+
+
+
 
 	public static LastOrder getInstance() {
 		if (instance == null)
@@ -54,12 +62,15 @@ public class LastOrder {
 	public LastOrder findLastOrder() {
 
 		// Here we query the Product DB and we get the product names or the product IDs
-		
-		productName = "Product1";
-		quantity = 22;
-		date = java.time.LocalDateTime.now();
-		
-		
+
+
+//				productName = "Product1";
+//				quantity = 22;
+//				date = java.time.LocalDateTime.now();
+		this.productName = productName;
+		this.quantity = quantity;
+		this.date = java.time.LocalDateTime.now();
+
 
 		return this;
 
