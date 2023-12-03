@@ -47,5 +47,10 @@ public class OrderFulfilled implements IOrderState{
 		return fulfilledResponse;
 	}
 
+	public String responseMessageForUI() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

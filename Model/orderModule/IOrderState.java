@@ -12,5 +12,6 @@ public interface IOrderState {
 	public String response(Order anOrder, int price, IProduct aProduct);
 	
 	
+	
 
 }

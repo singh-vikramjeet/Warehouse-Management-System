@@ -159,11 +159,13 @@ public class Server {
 			// Create instances of 2 observers
 			IServerUIObserver bcObserver = new BarChartObserver();
 			IServerUIObserver taObserver = new TextAreaObserver();
+			IServerUIObserver rlObserver = new ResponseLabelObserver();
 			// Create a list of observers
 			List<IServerUIObserver> observersList = new ArrayList<IServerUIObserver>();
 			// Add the observers to the observersList
 			observersList.add(bcObserver);
 			observersList.add(taObserver);
+			observersList.add(rlObserver);
 			// Pass Order State to the Model Data Subject 
 			ModelDataSubject mds = new ModelDataSubject(observersList,aState);
 			

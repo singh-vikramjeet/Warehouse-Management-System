@@ -13,8 +13,8 @@ public class Queue {
 	}
 	
 	// Method to remove an order from the queue
-	public static void getFirstOrder() {
-		orderQueue.remove();
+	public static Order getFirstOrder() {
+		return orderQueue.remove();
 	}
 
 	public static Deque<Order> getOrderQueue() {
