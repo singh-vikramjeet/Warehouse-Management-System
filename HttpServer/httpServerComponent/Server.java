@@ -180,6 +180,9 @@ public class Server {
 			OutputStream os = exchange.getResponseBody();
 			os.write(response.getBytes());
 			os.close();
+			
+			// Remove First Order from the queue
+			qObject.removeFirstOrder();
 
 
 		}
