@@ -6,7 +6,7 @@ import java.util.ArrayDeque;
 
 // offer : add element to deque
 // poll :  retrieve and remove element
-// peek :  
+// peek :  Retrieve but do not remove element
 
 public class Queue {
     // FIFO Queue
