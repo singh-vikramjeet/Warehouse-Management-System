@@ -27,7 +27,7 @@ public class TextAreaObserver implements IServerUIObserver {
 		jp.repaint();
 		
 		// Call createReport method here from MainServerUI
-			System.out.println("Inside Text Area Observer :: Text Area is updated");		
+		//System.out.println("Inside Text Area Observer :: Text Area is updated");		
 	}
 
 }

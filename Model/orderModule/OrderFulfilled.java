@@ -5,6 +5,7 @@ import java.util.List;
 
 import orderDetails.Order;
 import productModule.IProduct;
+import quantityLogic.QuantityComparison;
 import sqLiteDB.ProductDB;
 
 // If Order is fulfilled, then
@@ -23,6 +24,7 @@ public class OrderFulfilled implements IOrderState{
 
 		// New Current Stock Quantity
 		int newQuantity = aProduct.getCurrentStockQuantity() - anOrder.getProductQuantity();
+		int productIndex = 0;
 		
 		// Get Product Details from the Database
 		List<IProduct> productList = ProductDB.getProductList();
@@ -38,10 +40,21 @@ public class OrderFulfilled implements IOrderState{
 		for (int i = 0; i < 5; i++) {
 			if(productList.get(i).getProductName().equalsIgnoreCase(anOrder.getProductName())) {
 				productList.get(i).setCurrentStockQuantity(newQuantity);
+				productIndex = i;
 			}
 		}
 
-		// Notify the Bar Chart Observer and Text Area Observer
+		// Check the currentStockQuantity after the order is fulfilled
+		int minStock = productList.get(productIndex).getMinStockQuantity();
+		//System.out.println("Minstock Value: " + minStock);
+		if(newQuantity < minStock) {
+			// Call Restock Operation
+			System.out.println("Minstock Value: " + minStock);
+			QuantityComparison qc = new QuantityComparison(anOrder, aProduct);
+			System.out.println("Restock operation called for Min Stock condition");
+			qc.restockOperation();
+			productList.get(productIndex).setCurrentStockQuantity(productList.get(productIndex).getMaxStockQuantity());
+		}
 
 
 		return fulfilledResponse;

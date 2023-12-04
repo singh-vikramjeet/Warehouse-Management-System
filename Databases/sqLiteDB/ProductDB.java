@@ -56,6 +56,7 @@ public class ProductDB {
 		        aProduct.setUnitPrice(rs.getInt("UnitPrice"));
 		        aProduct.setMaxStockQuantity(rs.getInt("MaxStockQuantity"));
 		        aProduct.setRestockSchedule(rs.getInt("RestockSchedule"));
+		        aProduct.setMinStockQuantity(rs.getInt("MinStockQuantity"));
 		        aProduct.setDiscountStrategyID(rs.getString("DiscountStrategy"));
 		        productList.add(aProduct);
 		        

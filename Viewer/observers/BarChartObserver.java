@@ -17,7 +17,7 @@ public class BarChartObserver implements IServerUIObserver {
 		
 		// Call createBar method here from MainServerUI
 		if(oneState.getClass().getSimpleName().equalsIgnoreCase("OrderFulfilled")) {
-			System.out.println("Inside Bar Chart Observer :: Bar chart is updated");
+			//System.out.println("Inside Bar Chart Observer :: Bar chart is updated");
 			// Get west JPanel
 			JPanel jp = MainServerUI.getInstance().getWest();
 			// Update the chart data in the MainServerUI

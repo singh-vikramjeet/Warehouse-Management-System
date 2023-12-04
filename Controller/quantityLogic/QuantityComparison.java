@@ -70,19 +70,19 @@ public class QuantityComparison {
 		if(orderedQuantity < maxStockQuantity && orderedQuantity < currentStockQuantity) {
 			// Order Fulfilled State
 			this.orderState = 3;
-			System.out.println("Order Fulfilled");
+			//System.out.println("Order Fulfilled");
 		}
 		else if(orderedQuantity > maxStockQuantity) {
 			// Order Rejected State
 			this.orderState = 1;
-			System.out.println("Order Rejected");
+			//System.out.println("Order Rejected");
 		}
 		else if (orderedQuantity > currentStockQuantity) {
 			restockOperation();
 			this.orderState = 2;
-			System.out.println("Order Pending - Restock Operation Initiated");
+			//System.out.println("Order Pending - Restock Operation Initiated");
 			// call restock operation here
-			
+
 		}
 	}
 
@@ -90,12 +90,12 @@ public class QuantityComparison {
 	public void restockOperation() {
 		// Testing Restock on Product3
 		// 100 products to be reordered
-		
+
 		int quantityToRestock = maxStockQuantity - currentStockQuantity;
-		
+
 		if(currentStockQuantity < maxStockQuantity) {
-			System.out.println("Restocking operation started");
-			
+			// Restocking Operation started
+			System.out.println("Order Pending - Restock Operation Initiated");
 			while(quantityToRestock > restockSchedule) {
 				// Perform Restock operation
 				ProductDB.restockProduct(productName, restockSchedule);
@@ -106,17 +106,17 @@ public class QuantityComparison {
 			System.out.println("Restocking operation completed");
 			// Call ProductDB.connect to update the list
 			//ProductDB.connect();
-			
+
 		}
 		else {
 			// Product already at max stock
 			System.out.println("Product already at max stock");
 		}
-		
-		
-		
 
-		
+
+
+
+
 
 
 	}
