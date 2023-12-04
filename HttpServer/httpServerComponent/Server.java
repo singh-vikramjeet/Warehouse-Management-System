@@ -18,6 +18,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
+import facade.OrderHandlerFacade;
 import warehouseServerVisualizer.utils.*;
 import java.time.LocalDateTime;
 import orderDetails.Order;
@@ -93,96 +94,17 @@ public class Server {
 			int quantityP2 = Integer.parseInt(parms.get("p2"));
 			// Order Details from the client
 			Order anOrder = new Order(parms.get("p1"),quantityP2,LocalDateTime.parse(parms.get("p3")));
-
 			
-			// Queue to store list of orders
-			Queue qObject = new Queue();
-			// Add order object to the queue
-			qObject.addOrder(anOrder);
-			
-			// Set the details for LastOrder
-			LastOrder.getInstance();
-			LastOrder.setProductName(anOrder.getProductName());
-			LastOrder.setQuantity(anOrder.getProductQuantity());
-			LastOrder.setDate(LocalDateTime.parse(parms.get("p3")));
-			
-
-			// Get Product Details from the Database
-			List<IProduct> productList = ProductDB.getProductList();
-
-			// Check which Product is being ordered
-			String ProductName = anOrder.getProductName();
-
-			// Create a Product object
-			IProduct aProduct = new IProduct();
-
-			// Iterate over the Product List to extract the right product
-			for (int i = 0; i < 5; i++) {
-				if(productList.get(i).getProductName().equalsIgnoreCase(ProductName)) {
-					aProduct = productList.get(i);
-				}
-			}
-
-			// Pass the order and Product Object to the Controller (QuantityComparison class)
-			QuantityComparison qc = new QuantityComparison(anOrder, aProduct);
-
-			//(ProductID, currentStockQuantity, maxStockQuantity)
-			//IProduct aProduct = new IProduct(1,200,400);
-			//QuantityComparison qc = new QuantityComparison(anOrder, aProduct);
-			//QuantityComparison qc = new QuantityComparison(anOrder);
-			//qc.setCurrentStockQuantity(200);
-			//qc.setMaxStockQuantity(400);
-
-
-			// Determine the Order State
-			qc.determineOrderState();
-
-			// Get the Order State(1, 2 or 3)
-			// State 1: Order Rejected
-			// State 2: Order Accepted
-			// State 3: Order Fulfilled
-
-			int OrderState = qc.getOrderState();
-
-			// Create Factory Instance
-			StateFactory sf = StateFactory.getInstance();
-			// Pass the order state to the factory method to create the desired order state
-
-			IOrderState aState = sf.create(OrderState);
-
-			// Get order price from Controller
-			int price = 535;
-			//int csq = aProduct.getCurrentStockQuantity();
-
-			// Get response from the Order State and send it to the client
-			String stateResponse = aState.response(anOrder,535,aProduct);
-			// Create instances of 2 observers
-			IServerUIObserver bcObserver = new BarChartObserver();
-			IServerUIObserver taObserver = new TextAreaObserver();
-			IServerUIObserver rlObserver = new ResponseLabelObserver();
-			// Create a list of observers
-			List<IServerUIObserver> observersList = new ArrayList<IServerUIObserver>();
-			// Add the observers to the observersList
-			observersList.add(bcObserver);
-			observersList.add(taObserver);
-			observersList.add(rlObserver);
-			// Pass Order State to the Model Data Subject 
-			ModelDataSubject mds = new ModelDataSubject(observersList,aState);
-
-			// Model Data Subject will notify the observers and update the server UI according to the State
-			mds.notifyObservers(aState);
-
-			String response = stateResponse;
-			//addDelay(30);
+			OrderHandlerFacade.getInstance();
+			String response = OrderHandlerFacade.HandleOrder(anOrder);
 			System.out.println(response);
 
+			// Send Response back to Client
 			exchange.sendResponseHeaders(200, response.length());
 			OutputStream os = exchange.getResponseBody();
 			os.write(response.getBytes());
 			os.close();
 			
-			// Remove First Order from the queue
-			qObject.removeFirstOrder();
 
 
 		}
