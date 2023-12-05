@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -50,6 +51,8 @@ import org.jfree.data.time.Year;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import com.google.gson.JsonObject;
+
 import httpClient.clientCaller;
 
 
@@ -66,6 +69,7 @@ public class MainClientUI extends JFrame implements ActionListener {
 	private static String productReport = null;
 	private static String quantityReport = null;
 	private static String timeReport = null; 
+	private JLabel serverResponseLabel;
 	
 
 	private static MainClientUI instance;
@@ -84,6 +88,11 @@ public class MainClientUI extends JFrame implements ActionListener {
 		// Set top bar
 		JLabel step1 = new JLabel("Step1 Choose Product");
 		JLabel step2 = new JLabel("Step2 Choose Quantity");
+		
+		// Add Response Label for Server Response
+		serverResponseLabel = new JLabel("Order Status");
+		serverResponseLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		serverResponseLabel.setFont(new Font("Arial", Font.PLAIN, 18));
 		
 		JLabel chooseProductLabel = new JLabel(": ");
 		Vector<String> productNames = new Vector<String>();
@@ -143,6 +152,9 @@ public class MainClientUI extends JFrame implements ActionListener {
 		getContentPane().add(north, BorderLayout.NORTH);
 		getContentPane().add(east, BorderLayout.EAST);
 		getContentPane().add(west, BorderLayout.WEST);
+		
+		// Add ServerResponseLabel to the Bottom of UI
+		getContentPane().add(serverResponseLabel, BorderLayout.SOUTH);
 	}
 
 	private void createCharts(JPanel west) {
@@ -165,6 +177,11 @@ public class MainClientUI extends JFrame implements ActionListener {
 		JScrollPane outputScrollPane = new JScrollPane(report);
 		west.add(outputScrollPane);
 	}
+	
+	// Method to update the text of the JLabel
+    public void updateResponseLabelText(String newText) {
+        serverResponseLabel.setText(newText);
+    }
 
 	
 	public static void main(String[] args) {
@@ -208,8 +225,13 @@ public class MainClientUI extends JFrame implements ActionListener {
 			// Send HttpRequest to Server with all the order details
 			clientCaller cc = new clientCaller();
 			// localhost/sendorder handler
-			cc.sendHttpRequest(theProduct,theQuantity,java.time.LocalDateTime.now().toString());
-			//addDelay(5);
+			
+			
+			// Accepting String Response from Client
+			String ResponseForClient = cc.sendHttpRequest(theProduct,theQuantity,java.time.LocalDateTime.now().toString());
+			System.out.println("Response on ClientUI: " + ResponseForClient);
+			updateResponseLabelText(ResponseForClient);
+			
 			
 
 		}

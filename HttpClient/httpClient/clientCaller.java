@@ -1,9 +1,15 @@
 package httpClient;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 
 
@@ -57,6 +63,8 @@ public class clientCaller {
 					inline += sc.nextLine();
 				}
 				sc.close();
+				
+				System.out.println("Value of Inline" + inline);
 			
 				return inline;
 			}

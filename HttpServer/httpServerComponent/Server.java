@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import java.util.Map;
 
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -32,6 +33,9 @@ import observers.*;
 import subject.ModelDataSubject;
 import sqLiteDB.ProductDB;
 import orderDetails.Queue;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 
 
@@ -94,7 +98,7 @@ public class Server {
 			int quantityP2 = Integer.parseInt(parms.get("p2"));
 			// Order Details from the client
 			Order anOrder = new Order(parms.get("p1"),quantityP2,LocalDateTime.parse(parms.get("p3")));
-			
+
 			OrderHandlerFacade.getInstance();
 			String response = OrderHandlerFacade.HandleOrder(anOrder);
 			System.out.println(response);
@@ -104,11 +108,14 @@ public class Server {
 			OutputStream os = exchange.getResponseBody();
 			os.write(response.getBytes());
 			os.close();
-			
+
+
 
 
 		}
 	}
+
+
 
 	public static Map<String, String> queryToMap(String query){
 

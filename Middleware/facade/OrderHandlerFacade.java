@@ -81,6 +81,8 @@ public class OrderHandlerFacade {
 		IOrderState aState = sf.create(OrderState);
 
 		// Step 9: Get order price from Controller
+		// *************** STRATEGY DESIGN PATTERN *************************
+		
 		int price = 535;
 
 		// Step 10: Get response from the Order State and send it back to the Http Handler
