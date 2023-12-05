@@ -19,13 +19,21 @@ public class PricingStrategyX implements IPricingStrategy{
 		int finalPrice = 0;
 		
 		int totalValue = orderQuantity * unitPrice;
-		double discount = totalValue * 0.05;
-		finalPrice = (int) (totalValue - discount);
+		int finalValue = 0;
+		
+		if(orderQuantity > 100) {
+			
+		double discountAmount = totalValue * 0.05;
+		
+		finalValue = (int) (totalValue - discountAmount);
+			
+		}
+		
+		System.out.println("Strategy One ==> " + finalValue);
+		
+		return finalValue;
 		
 		
-		
-		
-		return finalPrice;
 	}
 
 	

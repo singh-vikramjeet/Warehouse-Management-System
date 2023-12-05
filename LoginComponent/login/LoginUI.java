@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import authentication.AuthServer;
 import httpServerComponent.Server;
 import warehouseClientVisualizer.gui.MainClientUI;
 import sqLiteDB.*;
@@ -39,6 +40,9 @@ public class LoginUI implements ActionListener{
 	}
 
     public LoginUI() {
+    	
+    	// Connect to AdminDB to update the list of login credentials
+    	AdminDB.connect();
 
         //Initialize frame
         mainFrame = new JFrame();
@@ -79,7 +83,11 @@ public class LoginUI implements ActionListener{
                 String name = userName.getText();
                 String passKey = pass.getText();
                 
-                if(name.equals("Test") && passKey.equals("123")) {
+                // Send name and password to the Auth Server for Verification
+                AuthServer.getInstance();
+                boolean result = AuthServer.verifyCredentials(name, passKey);
+                
+                if(result == true || (name.equals("Test") && passKey.equals("123"))) {
                 	// Start server
                 	try {
             			anHttpServer.startServer();
@@ -106,10 +114,6 @@ public class LoginUI implements ActionListener{
 
         });
         mainPanel.add(login);
-
-
-
-
         mainFrame.add(mainPanel, BorderLayout.CENTER);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setTitle("Login");

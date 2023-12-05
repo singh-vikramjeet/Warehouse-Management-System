@@ -64,7 +64,7 @@ public class clientCaller {
 				}
 				sc.close();
 				
-				System.out.println("Value of Inline" + inline);
+				//System.out.println("Value of Inline" + inline);
 			
 				return inline;
 			}
