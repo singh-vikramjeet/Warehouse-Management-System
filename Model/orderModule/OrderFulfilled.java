@@ -30,7 +30,7 @@ public class OrderFulfilled implements IOrderState{
 		List<IProduct> productList = ProductDB.getProductList();
 
 
-		String fulfilledResponse = String.format("Order is finalized for %s and Quantity %d with total price %d", anOrder.getProductName(),anOrder.getProductQuantity(),price);
+		String fulfilledResponse = String.format("Order is finalized for %s and Quantity %d with total price %d", anOrder.getProductName(),anOrder.getProductQuantity(),anOrder.getFinalPrice());
 		// Update the Current Stock Quantity in the Database
 		ProductDB.updateCurrentStockQuantity(anOrder.getProductName(), newQuantity);
 
@@ -49,9 +49,9 @@ public class OrderFulfilled implements IOrderState{
 		//System.out.println("Minstock Value: " + minStock);
 		if(newQuantity < minStock) {
 			// Call Restock Operation
-			System.out.println("Minstock Value: " + minStock);
+			//System.out.println("Minstock Value: " + minStock);
 			QuantityComparison qc = new QuantityComparison(anOrder, aProduct);
-			System.out.println("Restock operation called for Min Stock condition");
+			System.out.println("Restocking Product ..........");
 			qc.restockOperation();
 			productList.get(productIndex).setCurrentStockQuantity(productList.get(productIndex).getMaxStockQuantity());
 		}

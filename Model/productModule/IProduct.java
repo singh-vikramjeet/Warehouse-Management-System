@@ -11,6 +11,7 @@ public class IProduct {
 	private int minStockQuantity;
 	private int restockSchedule;
 	private String discountStrategyID;
+	private int finalPrice;
 	
 	// Constructor
 	public IProduct(int productID, String productName, int currentStockQuantity, int unitPrice, int maxStockQuantity,
@@ -24,6 +25,7 @@ public class IProduct {
 		this.minStockQuantity = minStockQuantity;
 		this.restockSchedule = restockSchedule;
 		this.discountStrategyID = discountStrategyID;
+		
 	}
 	public IProduct(int id, int currentStockQuantity, int maxStockQuantity) {
 		this.productID = id;
@@ -97,6 +99,12 @@ public class IProduct {
 
 	public void setDiscountStrategyID(String discountStrategyID) {
 		this.discountStrategyID = discountStrategyID;
+	}
+	public int getFinalPrice() {
+		return finalPrice;
+	}
+	public void setFinalPrice(int finalPrice) {
+		this.finalPrice = finalPrice;
 	}
 	
 	

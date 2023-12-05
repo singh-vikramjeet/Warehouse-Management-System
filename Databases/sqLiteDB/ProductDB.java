@@ -32,9 +32,6 @@ public class ProductDB {
 			Statement statement = conn.createStatement();
 			statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
-			//System.out.println("\nConnection to SQLite has been established");
-			// List of Products
-			//productList = new ArrayList<IProduct>();
 
 			ResultSet rs = statement.executeQuery("select * from products");
 			 while(rs.next())
@@ -121,7 +118,7 @@ public class ProductDB {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection("jdbc:sqlite:/Users/vikramjeetsingh/DBBrowser/ProductDB.db");
-			System.out.println("Connection to SQLite has been established for Restock Operation");
+			//System.out.println("Connection to SQLite has been established for Restock Operation");
 			
 			// SQL to update the Current Stock Quantity
 			String updateStockSql = "UPDATE products SET CurrentStockQuantity = CurrentStockQuantity + ? WHERE Name=?";
@@ -145,48 +142,5 @@ public class ProductDB {
 		}
 	}
 	
-	// Restock operation for Controller
-	public static void restockTester() {
-		int currentStockQuantity = 300;
-		int maxStockQuantity = 400;
-		int quantityToRestock = maxStockQuantity - currentStockQuantity; // 100
-		int restockSchedule = 30;
-		
-		if(currentStockQuantity < maxStockQuantity) {
-			System.out.println("Restock Initiated");
-			
-			while(quantityToRestock > restockSchedule) {
-				// Perform Restock Operation
-				currentStockQuantity = currentStockQuantity + restockSchedule;
-				// Decrement quantityToRestock by restockSchedule
-				quantityToRestock -= restockSchedule;
-				
-			}
-			currentStockQuantity += quantityToRestock;
-			quantityToRestock = 0;
-			System.out.println("Restocking Completed");
-			System.out.println("Current Stock Quantity: " + currentStockQuantity);
-			System.out.println("Quantity To Restock: " + quantityToRestock);
-			
-			
-		}
-	}
-	
-	
-	
-	public static void main(String[] args) {
-		//updateCurrentStockQuantity("Product2",650);
-		//connect();
-//		List<IProduct> lp = ProductDB.getProductList();
-//		System.out.println(lp.get(0).getCurrentStockQuantity());
-//		System.out.println(lp.get(1).getCurrentStockQuantity());
-		//restockProduct("Product2",6);
-		//int result = 100 / 3;
-		//System.out.println(result);
-		restockTester();
-		
-		
-		
-	}
 
 }

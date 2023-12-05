@@ -101,7 +101,7 @@ public class Server {
 
 			OrderHandlerFacade.getInstance();
 			String response = OrderHandlerFacade.HandleOrder(anOrder);
-			System.out.println(response);
+			//System.out.println(response);
 
 			// Send Response back to Client
 			exchange.sendResponseHeaders(200, response.length());

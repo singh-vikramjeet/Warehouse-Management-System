@@ -5,6 +5,6 @@ import productModule.IProduct;
 
 
 public interface IPricingStrategy {
-	public int calculatePrice(IProduct p, Order o);
+	public int calculatePrice(PricingContext context);
 
 }

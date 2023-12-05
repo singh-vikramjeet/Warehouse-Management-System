@@ -16,6 +16,8 @@ public class ResponseLabelObserver implements IServerUIObserver {
 		Order anOrder = qObject.getFirstOrder();
 		String productName = anOrder.getProductName();
 		int productQuantity = anOrder.getProductQuantity();
+		int finalPrice = anOrder.getFinalPrice();
+		
 		
 		if(oneState.getClass().getSimpleName().equalsIgnoreCase("OrderRejected")) {
 			result = "Order exceeds the max quantity set for this product and cannot be processed";
@@ -27,7 +29,7 @@ public class ResponseLabelObserver implements IServerUIObserver {
 		}
 		else if(oneState.getClass().getSimpleName().equalsIgnoreCase("OrderFulfilled")) {
 			//result = "Order is finalized for Product X and Quantity Y with total price Z";
-			result = String.format("Order is finalized for %s and Quantity %d with total price Z", productName, productQuantity);
+			result = String.format("Order is finalized for %s and Quantity %d with total price %d", productName, productQuantity, finalPrice);
 		}
 		
 		// Update the text in the JLabel

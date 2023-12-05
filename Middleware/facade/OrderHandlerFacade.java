@@ -12,22 +12,24 @@ import observers.TextAreaObserver;
 import orderDetails.Order;
 import orderDetails.Queue;
 import orderModule.IOrderState;
+import pricingLogic.PricingContext;
 import productModule.IProduct;
 import quantityLogic.QuantityComparison;
 import sqLiteDB.ProductDB;
 import subject.ModelDataSubject;
 import warehouseServerVisualizer.utils.LastOrder;
+import pricingLogic.*;
 
 // THE FACADE PATTERN AS SINGLETON
 public class OrderHandlerFacade {
-	
+
 	// SINGLETON Pattern
 	private static OrderHandlerFacade instance = null;
-	
+
 	private OrderHandlerFacade OrderHandlerFacade() {
 		return new OrderHandlerFacade();
 	}
-	
+
 	public static OrderHandlerFacade getInstance() {
 		if(instance == null) {
 			instance = new OrderHandlerFacade();
@@ -82,11 +84,17 @@ public class OrderHandlerFacade {
 
 		// Step 9: Get order price from Controller
 		// *************** STRATEGY DESIGN PATTERN *************************
-		
-		int price = 535;
+
+		// Get the Discount Strategy ID for the Product
+		String strategyID = aProduct.getDiscountStrategyID();
+		// Calculate the final price of the product
+		int price = applyPricingStrategy(strategyID,aProduct,anOrder);
+		// Set Final Price for the product
+		anOrder.setFinalPrice(price);
+
 
 		// Step 10: Get response from the Order State and send it back to the Http Handler
-		String stateResponse = aState.response(anOrder,535,aProduct);
+		String stateResponse = aState.response(anOrder,price,aProduct);
 
 		// *************** OBSERVER DESIGN PATTERN *************
 
@@ -107,15 +115,37 @@ public class OrderHandlerFacade {
 
 		// Model Data Subject will notify the observers and update the server UI according to the State
 		mds.notifyObservers(aState);
-		
+
 		// Step 13: Remove Order from the queue
 		// Remove First Order from the queue
 		qObject.removeFirstOrder();
 		return stateResponse;
 
 
+	}
 
+	public static int applyPricingStrategy(String id, IProduct aProduct,Order anOrder) {
+		// Create a PricingContext
+		PricingContext pc = new PricingContext(aProduct,anOrder);
+		int price =0 ;
+		
+		if (id.equalsIgnoreCase("X")) {
+			pc.setStrategy(new PricingStrategyX());
+			price = pc.execute();
 
+		} else if (id.equalsIgnoreCase("Y")) {
+			pc.setStrategy(new PricingStrategyY());
+			price = pc.execute();
+			
+		} else if (id.equalsIgnoreCase("Z")) {
+			pc.setStrategy(new PricingStrategyZ());
+			price = pc.execute();
+		
+		} else {
+			System.out.println("Invalid id provided.");
+		}
+		
+		return price;
 	}
 
 }

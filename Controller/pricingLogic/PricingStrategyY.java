@@ -5,7 +5,11 @@ import productModule.IProduct;
 
 public class PricingStrategyY implements IPricingStrategy{
 
-	public int calculatePrice(IProduct p, Order o) {
+	public int calculatePrice(PricingContext context) {
+		
+		
+		IProduct p = context.getaProduct();
+		Order o = context.getAnOrder();
 
 		int orderQuantity = o.getProductQuantity();
 		int unitPrice = p.getUnitPrice();
@@ -21,7 +25,7 @@ public class PricingStrategyY implements IPricingStrategy{
 
 		}
 
-		System.out.println("Strategy Two ==> " + finalValue);
+		//System.out.println("Strategy Y ==> " + finalValue);
 
 		return finalValue;
 	}

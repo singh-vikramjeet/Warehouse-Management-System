@@ -13,7 +13,9 @@ public class PricingStrategyX implements IPricingStrategy{
 	// Condition 2: (Order Unit price * Order Quantity = Total value) > 1000 dollars  --> Additonal 5% discount
 	
 	
-	public int calculatePrice(IProduct p, Order o) {
+	public int calculatePrice(PricingContext context) {
+		IProduct p = context.getaProduct();
+		Order o = context.getAnOrder();
 		int orderQuantity = o.getProductQuantity();
 		int unitPrice = p.getUnitPrice();
 		int finalPrice = 0;
@@ -29,7 +31,7 @@ public class PricingStrategyX implements IPricingStrategy{
 			
 		}
 		
-		System.out.println("Strategy One ==> " + finalValue);
+		//System.out.println("Strategy X ==> " + finalValue);
 		
 		return finalValue;
 		

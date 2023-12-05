@@ -5,7 +5,10 @@ import productModule.IProduct;
 
 public class PricingStrategyZ implements IPricingStrategy{
 
-	public int calculatePrice(IProduct p, Order o) {
+	public int calculatePrice(PricingContext context) {
+		
+		IProduct p = context.getaProduct();
+		Order o = context.getAnOrder();
 		int orderQuantity = o.getProductQuantity();
 		int unitPrice = p.getUnitPrice();
 
@@ -20,7 +23,7 @@ public class PricingStrategyZ implements IPricingStrategy{
 
 		}
 
-		System.out.println("Strategy Three ==> " + finalValue);
+		//System.out.println("Strategy Z ==> " + finalValue);
 
 		return finalValue;
 	}
